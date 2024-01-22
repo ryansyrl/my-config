@@ -1,41 +1,41 @@
 {
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
-    "editor.fontFamily": "'Cascadia Code PL'",
-    "editor.fontLigatures": "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'zero', 'onum'",
-    "editor.tokenColorCustomizations": {
-        "textMateRules": [
-            {
-                "scope": [
-                    //following will be in italic (=FlottFlott)
-                    "comment",
-                    "entity.name.type.class", //class names
-                    "keyword", //import, export, return…
-                    "constant", //String, Number, Boolean…, this, super
-                    "storage.modifier", //static keyword
-                    "storage.type.class.js", //class keyword
-                    // "entity.other.attribute-name"
-                ],
-                "settings": {
-                    "fontStyle": "italic"
-                }
-            },
-            {
-                "scope": [
-                    //following will be excluded from italics (VSCode has some defaults for italics)
-                    "invalid",
-                    "keyword.operator",
-                    "constant.numeric.css",
-                    "keyword.other.unit.px.css",
-                    "constant.numeric.decimal.js",
-                    "constant.numeric.json"
-                ],
-                "settings": {
-                    "fontStyle": ""
-                }
-            }
-        ]
-    },
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": "true",
+    // "editor.tokenColorCustomizations": {
+    //   "textMateRules": [
+    //     {
+    //       "scope": [
+    //         //following will be in italic (=FlottFlott)
+    //         "comment",
+    //         "entity.name.type.class", //class names
+    //         "keyword", //import, export, return…
+    //         "constant", //String, Number, Boolean…, this, super
+    //         "storage.modifier", //static keyword
+    //         "storage.type.class.js", //class keyword
+    //         "entity.other.attribute-name"
+    //       ],
+    //       "settings": {
+    //         "fontStyle": "italic"
+    //       }
+    //     },
+    //     {
+    //       "scope": [
+    //         //following will be excluded from italics (VSCode has some defaults for italics)
+    //         "invalid",
+    //         "keyword.operator",
+    //         "constant.numeric.css",
+    //         "keyword.other.unit.px.css",
+    //         "constant.numeric.decimal.js",
+    //         "constant.numeric.json"
+    //       ],
+    //       "settings": {
+    //         "fontStyle": ""
+    //       }
+    //     }
+    //   ]
+    // },
     "editor.linkedEditing": true,
     "workbench.colorCustomizations": {
         "editor.lineHighlightBackground": "#1073cf2d",
@@ -44,7 +44,7 @@
     "emmet.includeLanguages": {
         "javascript": "javascript"
     },
-    "editor.wordWrap": "off",
+    "editor.wordWrap": "bounded",
     "diffEditor.wordWrap": "off",
     "editor.inlayHints.enabled": "off",
     "editor.showDeprecated": false,
@@ -52,9 +52,7 @@
     "workbench.sideBar.location": "right",
     "tabnine.experimentalAutoImports": true,
     "editor.lineHeight": 26,
-    "workbench.colorTheme": "Bearded Theme Arc",
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": null,
     "editor.minimap.enabled": false,
     "editor.cursorSmoothCaretAnimation": "on",
     "vim.easymotion": true,
@@ -91,7 +89,7 @@
             "commands": [
                 ":split"
             ]
-        },
+        }
         // {
         //   "before": ["leader", "h"],
         //   "commands": ["workbench.action.focusLeftGroup"]
@@ -103,12 +101,34 @@
     ],
     "editor.lineNumbers": "relative",
     "editor.smoothScrolling": true,
-    "workbench.editor.showTabs": false,
+    "workbench.editor.showTabs": "single",
     "advancedNewFile.convenienceOptions": [
         "last",
         "current",
         "root"
     ],
     "editor.cursorBlinking": "smooth",
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.productIconTheme": "icons-carbon",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.wordWrapColumn": 120,
+    "workbench.activityBar.location": "top",
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [
+            90
+        ],
+        "editor.selectionHighlight": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": "off"
+    },
+    "dart.flutterHotReloadOnSave": "all",
+    "dart.hotReloadOnSave": "all",
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
+    "files.refactoring.autoSave": false,
+    "workbench.colorTheme": "Bearded Theme Arc"
 }

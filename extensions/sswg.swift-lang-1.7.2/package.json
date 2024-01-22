@@ -1,0 +1,1023 @@
+{
+	"name": "swift-lang",
+	"displayName": "Swift",
+	"description": "Swift Language Support for Visual Studio Code.",
+	"version": "1.7.2",
+	"publisher": "sswg",
+	"icon": "icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/swift-server/vscode-swift"
+	},
+	"engines": {
+		"vscode": "^1.71.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Debuggers"
+	],
+	"keywords": [
+		"swift",
+		"sswg"
+	],
+	"activationEvents": [
+		"onLanguage:swift",
+		"workspaceContains:Package.swift",
+		"workspaceContains:compile_commands.json"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "swift",
+				"extensions": [
+					"swiftinterface"
+				]
+			}
+		],
+		"commands": [
+			{
+				"command": "swift.updateDependencies",
+				"title": "Update Package Dependencies",
+				"icon": "$(cloud-download)",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.resolveDependencies",
+				"title": "Resolve Package Dependencies",
+				"icon": "$(refresh)",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.cleanBuild",
+				"title": "Clean Build Folder",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.run",
+				"title": "Run Build",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.debug",
+				"title": "Debug Build",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.resetPackage",
+				"title": "Reset Package Dependencies",
+				"icon": "$(clear-all)",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.runScript",
+				"title": "Run Swift Script",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.useLocalDependency",
+				"title": "Use Local Version",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.editDependency",
+				"title": "Edit Locally",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.uneditDependency",
+				"title": "Revert To Original Version",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.openInWorkspace",
+				"title": "Add to Workspace",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.openExternal",
+				"title": "View Repository",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.openPackage",
+				"title": "Open Package.swift",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.restartLSPServer",
+				"title": "Restart LSP Server",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.switchPlatform",
+				"title": "Select Target Platform...",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.selectXcodeDeveloperDir",
+				"title": "Select Xcode Developer Dir...",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.runSnippet",
+				"title": "Run Swift Snippet",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.debugSnippet",
+				"title": "Debug Swift Snippet",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.runPluginTask",
+				"title": "Run Command Plugin",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.insertFunctionComment",
+				"title": "Insert Function Comment",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.showTestCoverageReport",
+				"title": "Show Test Coverage Report",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.toggleTestCoverage",
+				"title": "Toggle Display of Test Coverage Results",
+				"category": "Swift"
+			},
+			{
+				"command": "swift.attachDebugger",
+				"title": "Attach to Process...",
+				"category": "Swift"
+			}
+		],
+		"configuration": [
+			{
+				"title": "Swift",
+				"properties": {
+					"swift.path": {
+						"type": "string",
+						"default": "",
+						"markdownDescription": "The path of the folder containing the Swift executables. The default is to look in the PATH environment variable.",
+						"order": 1
+					},
+					"swift.buildArguments": {
+						"type": "array",
+						"default": [],
+						"items": {
+							"type": "string"
+						},
+						"markdownDescription": "Arguments to pass to `swift build`. Keys and values should be provided as separate entries. If you have created a copy of the build task in `tasks.json` then these build arguments will not be propogated to that task.",
+						"order": 2
+					},
+					"swift.testEnvironmentVariables": {
+						"type": "object",
+						"patternProperties": {
+							".*": {
+								"type": "string"
+							}
+						},
+						"default": {},
+						"markdownDescription": "Environment variables to set when running tests. To set environment variables when debugging an application you should edit the relevant `launch.json` configuration",
+						"scope": "machine-overridable",
+						"order": 3
+					},
+					"swift.sanitizer": {
+						"type": "string",
+						"default": "off",
+						"enum": [
+							"off",
+							"thread",
+							"address"
+						],
+						"description": "Runtime sanitizer instrumentation. Requires a re-compilation.",
+						"scope": "machine-overridable",
+						"order": 4
+					},
+					"swift.searchSubfoldersForPackages": {
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "Search sub-folders of workspace folder for Swift Packages at start up.",
+						"scope": "machine-overridable",
+						"order": 5
+					},
+					"swift.autoGenerateLaunchConfigurations": {
+						"type": "boolean",
+						"default": true,
+						"markdownDescription": "When loading a `Package.swift`, auto-generate `launch.json` configurations for running any executables.",
+						"scope": "machine-overridable",
+						"order": 6
+					},
+					"swift.disableAutoResolve": {
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "Disable automatic running of `swift package resolve`. This will also disable searching for command plugins and the initial test discovery process as both of these can kick of a resolve.",
+						"scope": "machine-overridable",
+						"order": 7
+					},
+					"swift.problemMatchCompileErrors": {
+						"type": "boolean",
+						"default": true,
+						"description": "List compile errors in the Problems View.",
+						"order": 8
+					},
+					"swift.excludePathsFromPackageDependencies": {
+						"description": "A list of paths to exclude from the Package Dependencies view.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						},
+						"default": [
+							".git",
+							".github"
+						],
+						"order": 9
+					},
+					"swift.backgroundCompilation": {
+						"type": "boolean",
+						"default": false,
+						"markdownDescription": "**Experimental**: Run `swift build` in the background whenever a file is saved.",
+						"order": 10
+					},
+					"swift.actionAfterBuildError": {
+						"type": "string",
+						"default": "Focus Terminal",
+						"enum": [
+							"Focus Problems",
+							"Focus Terminal",
+							"Do Nothing"
+						],
+						"enumDescriptions": [
+							"Focus on Problems View",
+							"Focus on Build Task Terminal"
+						],
+						"markdownDescription": "Action after a Build task generates errors.",
+						"order": 11
+					},
+					"swift.buildPath": {
+						"type": "string",
+						"default": "",
+						"markdownDescription": "Path to the build directory passed to all swift package manager commands.",
+						"order": 12
+					}
+				}
+			},
+			{
+				"title": "Sourcekit-LSP",
+				"properties": {
+					"swift.sourcekit-lsp.serverPath": {
+						"type": "string",
+						"markdownDescription": "The path of the `sourcekit-lsp` executable. The default is to look in the path where `swift` is found.",
+						"order": 1
+					},
+					"swift.sourcekit-lsp.serverArguments": {
+						"type": "array",
+						"default": [],
+						"items": {
+							"type": "string"
+						},
+						"description": "Arguments to pass to Sourcekit-LSP. Argument keys and values should be provided as separate entries in the array e.g. ['--log-level', 'debug']",
+						"order": 2
+					},
+					"swift.sourcekit-lsp.supported-languages": {
+						"type": "array",
+						"default": [
+							"swift",
+							"objective-c",
+							"objective-cpp",
+							"c",
+							"cpp"
+						],
+						"description": "List of languages supported by SourceKit-LSP. This is used to determine whether SourceKit-LSP should provide language features for a particular file type.",
+						"items": {
+							"type": "string",
+							"enum": [
+								"swift",
+								"objective-c",
+								"objective-cpp",
+								"c",
+								"cpp"
+							]
+						},
+						"order": 4
+					},
+					"swift.sourcekit-lsp.trace.server": {
+						"type": "string",
+						"default": "off",
+						"enum": [
+							"off",
+							"messages",
+							"verbose"
+						],
+						"description": "Traces the communication between VS Code and the SourceKit-LSP language server.",
+						"order": 5
+					},
+					"swift.sourcekit-lsp.disable": {
+						"type": "boolean",
+						"default": false,
+						"description": "Disable the running of SourceKit-LSP.",
+						"order": 6
+					},
+					"sourcekit-lsp.serverPath": {
+						"type": "string",
+						"markdownDescription": "The path of the `sourcekit-lsp` executable. The default is to look in the path where `swift` is found.",
+						"markdownDeprecationMessage": "**Deprecated**: Please use `#swift.sourcekit-lsp.serverPath#` instead.",
+						"order": 1
+					},
+					"sourcekit-lsp.serverArguments": {
+						"type": "array",
+						"default": [],
+						"items": {
+							"type": "string"
+						},
+						"description": "Arguments to pass to Sourcekit-LSP. Argument keys and values should be provided as separate entries in the array e.g. ['--log-level', 'debug']",
+						"markdownDeprecationMessage": "**Deprecated**: Please use `#swift.sourcekit-lsp.serverArguments#` instead.",
+						"order": 2
+					},
+					"sourcekit-lsp.inlayHints.enabled": {
+						"type": "boolean",
+						"default": true,
+						"description": "Render inlay type annotations in the editor. Inlay hints require Swift 5.6.",
+						"markdownDeprecationMessage": "**Deprecated**: Please use `#editor.inlayHints.enabled#` instead.",
+						"order": 3
+					},
+					"sourcekit-lsp.support-c-cpp": {
+						"type": "string",
+						"default": "cpptools-inactive",
+						"enum": [
+							"enable",
+							"disable",
+							"cpptools-inactive"
+						],
+						"enumDescriptions": [
+							"Always enable",
+							"Always disable",
+							"Disable when C/C++ extension is active"
+						],
+						"description": "Add LSP functionality for C/C++ files. By default this is set to disable when the C/C++ extension is active.",
+						"markdownDeprecationMessage": "**Deprecated**: Please use `#swift.sourcekit-lsp.supported-languages#` instead.",
+						"order": 5
+					},
+					"sourcekit-lsp.trace.server": {
+						"type": "string",
+						"default": "off",
+						"enum": [
+							"off",
+							"messages",
+							"verbose"
+						],
+						"description": "Traces the communication between VS Code and the SourceKit-LSP language server.",
+						"markdownDeprecationMessage": "**Deprecated**: Please use `#swift.sourcekit-lsp.trace.server#` instead.",
+						"order": 6
+					},
+					"sourcekit-lsp.disable": {
+						"type": "boolean",
+						"default": false,
+						"description": "Disable the running of SourceKit-LSP.",
+						"markdownDeprecationMessage": "**Deprecated**: Please use `#swift.sourcekit-lsp.disable#` instead.",
+						"order": 7
+					}
+				}
+			},
+			{
+				"title": "Test Coverage",
+				"properties": {
+					"swift.coverage.displayReportAfterRun": {
+						"type": "boolean",
+						"default": true,
+						"description": "Should test coverage report be shown after running tests",
+						"order": 1
+					},
+					"swift.coverage.alwaysShowStatusItem": {
+						"type": "boolean",
+						"default": true,
+						"description": "Always show the test coverage status item. If this is set to true the status item can be clicked on to toggle test coverage display on and off.",
+						"order": 2
+					},
+					"swift.coverage.colors.lightMode.hit": {
+						"type": "string",
+						"default": "#c0ffc0",
+						"description": "Light mode theme background color for line of code hit during test coverage.",
+						"order": 3
+					},
+					"swift.coverage.colors.lightMode.miss": {
+						"type": "string",
+						"default": "#ffc0c0",
+						"description": "Light mode theme background color for line of code missed during test coverage.",
+						"order": 4
+					},
+					"swift.coverage.colors.darkMode.hit": {
+						"type": "string",
+						"default": "#003000",
+						"description": "Dark mode theme background color for line of code hit during test coverage.",
+						"order": 5
+					},
+					"swift.coverage.colors.darkMode.miss": {
+						"type": "string",
+						"default": "#400000",
+						"description": "Dark mode theme background color for line of code missed during test coverage.",
+						"order": 6
+					}
+				}
+			},
+			{
+				"title": "Debugger (Windows)",
+				"properties": {
+					"swift.debugger.useDebugAdapterFromToolchain": {
+						"type": "boolean",
+						"default": false,
+						"description": "Use lldb-vscode packaged with Swift toolchain as your debug adapter. This is currently only available on Windows platforms",
+						"order": 1
+					},
+					"swift.debugger.path": {
+						"type": "string",
+						"default": "",
+						"description": "Path to lldb-vscode debug adapter.",
+						"order": 2
+					}
+				}
+			},
+			{
+				"title": "Advanced",
+				"properties": {
+					"swift.swiftEnvironmentVariables": {
+						"type": "object",
+						"patternProperties": {
+							".*": {
+								"type": "string"
+							}
+						},
+						"default": {},
+						"markdownDescription": "Additional environment variables to pass to swift operations.",
+						"order": 1
+					},
+					"swift.runtimePath": {
+						"type": "string",
+						"default": "",
+						"description": "The path of the folder containing the Swift runtime libraries.",
+						"order": 2
+					},
+					"swift.SDK": {
+						"type": "string",
+						"default": "",
+						"description": "The path of the SDK to compile against (`--sdk` parameter). The default SDK is determined by the environment on macOS and Windows.",
+						"order": 3
+					},
+					"swift.diagnostics": {
+						"type": "boolean",
+						"default": false,
+						"description": "Output additional diagnostics to the Swift Output View.",
+						"order": 100
+					}
+				}
+			}
+		],
+		"keybindings": [
+			{
+				"command": "swift.insertFunctionComment",
+				"key": "Alt+Ctrl+/",
+				"mac": "Alt+Cmd+/",
+				"when": "editorTextFocus"
+			}
+		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "swift.updateDependencies",
+					"when": "swift.hasPackage"
+				},
+				{
+					"command": "swift.resolveDependencies",
+					"when": "swift.hasPackage"
+				},
+				{
+					"command": "swift.cleanBuild",
+					"when": "swift.hasPackage"
+				},
+				{
+					"command": "swift.switchPlatform",
+					"when": "isMac"
+				},
+				{
+					"command": "swift.resetPackage",
+					"when": "swift.hasPackage"
+				},
+				{
+					"command": "swift.openPackage",
+					"when": "swift.hasPackage"
+				},
+				{
+					"command": "swift.useLocalDependency",
+					"when": "false"
+				},
+				{
+					"command": "swift.editDependency",
+					"when": "false"
+				},
+				{
+					"command": "swift.openInWorkspace",
+					"when": "false"
+				},
+				{
+					"command": "swift.uneditDependency",
+					"when": "false"
+				},
+				{
+					"command": "swift.openExternal",
+					"when": "false"
+				},
+				{
+					"command": "swift.selectXcodeDeveloperDir",
+					"when": "isMac"
+				},
+				{
+					"command": "swift.run",
+					"when": "editorLangId == swift && swift.currentTargetType == 'executable'"
+				},
+				{
+					"command": "swift.debug",
+					"when": "editorLangId == swift && swift.currentTargetType == 'executable'"
+				},
+				{
+					"command": "swift.runScript",
+					"when": "!swift.fileIsSnippet && editorLangId == swift && swift.currentTargetType == 'none'"
+				},
+				{
+					"command": "swift.runSnippet",
+					"when": "swift.fileIsSnippet"
+				},
+				{
+					"command": "swift.debugSnippet",
+					"when": "swift.fileIsSnippet"
+				},
+				{
+					"command": "swift.runPluginTask",
+					"when": "swift.packageHasPlugins"
+				},
+				{
+					"command": "swift.attachDebugger",
+					"when": "swift.lldbVSCodeAvailable"
+				}
+			],
+			"editor/context": [
+				{
+					"submenu": "swift.editor"
+				}
+			],
+			"swift.editor": [
+				{
+					"command": "swift.run",
+					"group": "1_file@1",
+					"when": "editorLangId == swift && swift.currentTargetType == 'executable'"
+				},
+				{
+					"command": "swift.debug",
+					"group": "1_file@2",
+					"when": "editorLangId == swift && swift.currentTargetType == 'executable'"
+				},
+				{
+					"command": "swift.runScript",
+					"group": "1_file@3",
+					"when": "!swift.fileIsSnippet && editorLangId == swift && swift.currentTargetType == 'none'"
+				},
+				{
+					"command": "swift.runSnippet",
+					"group": "1_file@4",
+					"when": "swift.fileIsSnippet"
+				},
+				{
+					"command": "swift.debugSnippet",
+					"group": "1_file@5",
+					"when": "swift.fileIsSnippet"
+				},
+				{
+					"command": "swift.cleanBuild",
+					"group": "2_pkg@1",
+					"when": "swift.hasPackage"
+				}
+			],
+			"view/title": [
+				{
+					"command": "swift.updateDependencies",
+					"when": "view == packageDependencies",
+					"group": "navigation"
+				},
+				{
+					"command": "swift.resolveDependencies",
+					"when": "view == packageDependencies",
+					"group": "navigation"
+				},
+				{
+					"command": "swift.resetPackage",
+					"when": "view == packageDependencies",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "swift.useLocalDependency",
+					"when": "view == packageDependencies && viewItem == remote"
+				},
+				{
+					"command": "swift.uneditDependency",
+					"when": "view == packageDependencies && viewItem == editing"
+				},
+				{
+					"command": "swift.openInWorkspace",
+					"when": "view == packageDependencies && viewItem == editing"
+				},
+				{
+					"command": "swift.openInWorkspace",
+					"when": "view == packageDependencies && viewItem == local"
+				},
+				{
+					"command": "swift.openExternal",
+					"when": "view == packageDependencies && viewItem != local"
+				}
+			]
+		},
+		"submenus": [
+			{
+				"id": "swift.editor",
+				"label": "Swift"
+			}
+		],
+		"problemMatchers": [
+			{
+				"name": "swiftc",
+				"owner": "swift",
+				"source": "swiftc",
+				"fileLocation": "absolute",
+				"pattern": [
+					{
+						"regexp": "^(.*?):(\\d+)(?::(\\d+))?:\\s+(warning|error|note):\\s+(.*)$",
+						"file": 1,
+						"line": 2,
+						"column": 3,
+						"severity": 4,
+						"message": 5
+					}
+				]
+			}
+		],
+		"taskDefinitions": [
+			{
+				"type": "swift",
+				"properties": {
+					"args": {
+						"description": "An array of arguments for the command. Each argument will be quoted separately.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"cwd": {
+						"description": "The folder to run the task in.",
+						"type": "string"
+					},
+					"disableTaskQueue": {
+						"description": "Disable any queued tasks while running the task. This includes the auto resolve when Packages.resolved is updated.",
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"args"
+				]
+			},
+			{
+				"type": "swift-plugin",
+				"properties": {
+					"command": {
+						"description": "The plugin command to execute. This should not contain any arguments as it will be quoted.",
+						"type": "string"
+					},
+					"args": {
+						"description": "An array of arguments for the command. Each argument will be quoted separately.",
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
+					"disableSandbox": {
+						"description": "Plugins normally run inside a sandbox. Set this to true to disable the sandbox when running .",
+						"type": "boolean"
+					},
+					"allowWritingToPackageDirectory": {
+						"description": "Allow this plugin to write to the package directory.",
+						"type": "boolean"
+					},
+					"cwd": {
+						"description": "The folder to run the swift plugin in.",
+						"type": "string"
+					},
+					"disableTaskQueue": {
+						"description": "Disable any queued tasks while running this command plugin. This includes the auto resolve when Packages.resolved is updated.",
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"command",
+					"args"
+				]
+			}
+		],
+		"views": {
+			"explorer": [
+				{
+					"id": "packageDependencies",
+					"name": "Package Dependencies",
+					"icon": "$(archive)",
+					"when": "swift.hasPackage"
+				}
+			]
+		},
+		"breakpoints": [
+			{
+				"language": "asm"
+			},
+			{
+				"language": "c"
+			},
+			{
+				"language": "cpp"
+			},
+			{
+				"language": "objective-c"
+			},
+			{
+				"language": "objective-cpp"
+			},
+			{
+				"language": "rust"
+			},
+			{
+				"language": "swift"
+			}
+		],
+		"debuggers": [
+			{
+				"type": "swift-lldb",
+				"label": "Swift LLDB Debugger",
+				"configurationAttributes": {
+					"launch": {
+						"required": [
+							"program"
+						],
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Path to the program to debug."
+							},
+							"args": {
+								"type": [
+									"array",
+									"string"
+								],
+								"description": "Program arguments.",
+								"default": []
+							},
+							"cwd": {
+								"type": "string",
+								"description": "Program working directory.",
+								"default": "${workspaceRoot}"
+							},
+							"env": {
+								"type": "object",
+								"patternProperties": {
+									".*": {
+										"type": "string"
+									}
+								},
+								"description": "Additional environment variables to set when launching the program.",
+								"default": {}
+							},
+							"stopOnEntry": {
+								"type": "boolean",
+								"description": "Automatically stop after launch.",
+								"default": false
+							},
+							"disableASLR": {
+								"type": "boolean",
+								"description": "Enable or disable Address space layout randomization if the debugger supports it.",
+								"default": true
+							},
+							"disableSTDIO": {
+								"type": "boolean",
+								"description": "Don't retrieve STDIN, STDOUT and STDERR as the program is running.",
+								"default": false
+							},
+							"shellExpandArguments": {
+								"type": "boolean",
+								"description": "Expand program arguments as a shell would without actually launching the program in a shell.",
+								"default": false
+							},
+							"detachOnError": {
+								"type": "boolean",
+								"description": "Detach from the program.",
+								"default": false
+							},
+							"sourcePath": {
+								"type": "string",
+								"description": "Specify a source path to remap \"./\" to allow full paths to be used when setting breakpoints in binaries that have relative source paths."
+							},
+							"sourceMap": {
+								"type": "array",
+								"description": "Specify an array of path remappings; each element must itself be a two element array containing a source and destination pathname. Overrides sourcePath.",
+								"default": []
+							},
+							"debuggerRoot": {
+								"type": "string",
+								"description": "Specify a working directory to set the debug adaptor to so relative object files can be located."
+							},
+							"targetTriple": {
+								"type": "string",
+								"description": "Triplet of the target architecture to override value derived from the program file."
+							},
+							"platformName": {
+								"type": "string",
+								"description": "Name of the execution platform to override value derived from the program file."
+							},
+							"initCommands": {
+								"type": "array",
+								"description": "Initialization commands executed upon debugger startup.",
+								"default": []
+							},
+							"preRunCommands": {
+								"type": "array",
+								"description": "Commands executed just before the program is launched.",
+								"default": []
+							},
+							"postRunCommands": {
+								"type": "array",
+								"description": "Commands executed just as soon as the program is successfully launched when it's in a stopped state prior to any automatic continuation.",
+								"default": []
+							},
+							"launchCommands": {
+								"type": "array",
+								"description": "Custom commands that are executed instead of launching a process. A target will be created with the launch arguments prior to executing these commands. The commands may optionally create a new target and must perform a launch. A valid process must exist after these commands complete or the \"launch\" will fail. Launch the process with \"process launch -s\" to make the process to at the entry point since lldb-vscode will auto resume if necessary.",
+								"default": []
+							},
+							"stopCommands": {
+								"type": "array",
+								"description": "Commands executed each time the program stops.",
+								"default": []
+							},
+							"exitCommands": {
+								"type": "array",
+								"description": "Commands executed at the end of debugging session.",
+								"default": []
+							},
+							"runInTerminal": {
+								"type": "boolean",
+								"description": "Launch the program inside an integrated terminal in the IDE. Useful for debugging interactive command line programs",
+								"default": false
+							},
+							"timeout": {
+								"type": "string",
+								"description": "The time in seconds to wait for a program to stop at entry point when launching with \"launchCommands\". Defaults to 30 seconds."
+							}
+						}
+					},
+					"attach": {
+						"properties": {
+							"program": {
+								"type": "string",
+								"description": "Path to the program to attach to."
+							},
+							"pid": {
+								"type": [
+									"number"
+								],
+								"description": "System process ID to attach to."
+							},
+							"waitFor": {
+								"type": "boolean",
+								"description": "If set to true, then wait for the process to launch by looking for a process with a basename that matches `program`. No process ID needs to be specified when using this flag.",
+								"default": true
+							},
+							"sourcePath": {
+								"type": "string",
+								"description": "Specify a source path to remap \"./\" to allow full paths to be used when setting breakpoints in binaries that have relative source paths."
+							},
+							"sourceMap": {
+								"type": "array",
+								"description": "Specify an array of path remappings; each element must itself be a two element array containing a source and destination pathname. Overrides sourcePath.",
+								"default": []
+							},
+							"debuggerRoot": {
+								"type": "string",
+								"description": "Specify a working directory to set the debug adaptor to so relative object files can be located."
+							},
+							"targetTriple": {
+								"type": "string",
+								"description": "Triplet of the target architecture to override value derived from the program file."
+							},
+							"platformName": {
+								"type": "string",
+								"description": "Name of the execution platform to override value derived from the program file."
+							},
+							"attachCommands": {
+								"type": "array",
+								"description": "Custom commands that are executed instead of attaching to a process ID or to a process by name. These commands may optionally create a new target and must perform an attach. A valid process must exist after these commands complete or the \"attach\" will fail.",
+								"default": []
+							},
+							"initCommands": {
+								"type": "array",
+								"description": "Initialization commands executed upon debugger startup.",
+								"default": []
+							},
+							"preRunCommands": {
+								"type": "array",
+								"description": "Commands executed just before the program is attached to.",
+								"default": []
+							},
+							"postRunCommands": {
+								"type": "array",
+								"description": "Commands executed just as soon as the program is successfully attached when it's in a stopped state prior to any automatic continuation.",
+								"default": []
+							},
+							"stopCommands": {
+								"type": "array",
+								"description": "Commands executed each time the program stops.",
+								"default": []
+							},
+							"exitCommands": {
+								"type": "array",
+								"description": "Commands executed at the end of debugging session.",
+								"default": []
+							},
+							"coreFile": {
+								"type": "string",
+								"description": "Path to the core file to debug."
+							},
+							"timeout": {
+								"type": "string",
+								"description": "The time in seconds to wait for a program to stop when attaching using \"attachCommands\". Defaults to 30 seconds."
+							}
+						}
+					}
+				}
+			}
+		]
+	},
+	"extensionDependencies": [
+		"vadimcn.vscode-lldb"
+	],
+	"scripts": {
+		"vscode:prepublish": "npm run esbuild-base -- --minify",
+		"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --target=node16",
+		"esbuild": "npm run esbuild-base -- --sourcemap",
+		"esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+		"compile": "tsc",
+		"watch": "tsc --watch",
+		"lint": "eslint ./ --ext ts && tsc --noEmit",
+		"format": "prettier --check src test",
+		"pretest": "npm run compile && npm run lint",
+		"test": "tsc -p ./ && node ./out/test/runTest.js",
+		"package": "vsce package",
+		"dev-package": "vsce package --no-update-package-json 1.7.3-dev",
+		"preview-package": "vsce package --pre-release",
+		"tag": "./scripts/tag_release.sh $npm_package_version",
+		"contributors": "./scripts/generate_contributors_list.sh"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.4",
+		"@types/mocha": "^10.0.0",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.71.0",
+		"@typescript-eslint/eslint-plugin": "^5.1.0",
+		"@typescript-eslint/parser": "^5.1.0",
+		"@vscode/test-electron": "^1.6.2",
+		"esbuild": "^0.14.5",
+		"eslint": "^8.1.0",
+		"eslint-config-prettier": "^8.3.0",
+		"glob": "^7.1.7",
+		"mocha": "^9.1.3",
+		"prettier": "2.5.1",
+		"typescript": "^4.4.4",
+		"@vscode/vsce": "^2.19.0"
+	},
+	"dependencies": {
+		"@types/plist": "^3.0.2",
+		"plist": "^3.0.5",
+		"vscode-languageclient": "^8.1.0",
+		"@types/lcov-parse": "1.0.0",
+		"lcov-parse": "1.0.0"
+	},
+	"__metadata": {
+		"id": "5fa1ecb0-4907-41e1-bdac-b3fc04bf1a23",
+		"publisherId": "8dd25c61-ee22-4e36-adb7-d146dbb8ff4d",
+		"publisherDisplayName": "Swift Server Work Group",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"updated": true,
+		"isPreReleaseVersion": false,
+		"installedTimestamp": 1704439697846,
+		"pinned": false,
+		"preRelease": false
+	}
+}
